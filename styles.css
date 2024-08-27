@@ -54,7 +54,7 @@ h1 {
 .progress-fill {
     height: 100%;
     width: 0;
-    background: #0090FF;
+    background: red;
     transition: width 2s;
     
 }

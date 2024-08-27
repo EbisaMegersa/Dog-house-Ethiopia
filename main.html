@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Win Points</title>
+    <title>Main Page</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div id="balance">Balance: <span id="balance-value">0</span> points</div>
+    <div id="balance-container">
+        Balance: <span id="balance-value">0</span> Points
+    </div>
+
     <div id="popup" class="popup">
         <div class="popup-content">
             <span class="close">&times;</span>
-            <h2>Wow, You Win!</h2>
-            <p>Your points: <span id="point-value"></span></p>
+            <p>Wow, you are a winner!</p>
+            <p>You have earned: <span id="point-value">0</span> points!</p>
         </div>
     </div>
+
     <script src="mainet.js"></script>
 </body>
 </html>
