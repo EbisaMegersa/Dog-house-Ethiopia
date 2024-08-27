@@ -1,54 +1,42 @@
 window.onload = function() {
-    const popup = document.getElementById('popup');
-    const accountTimeElement = document.getElementById('account-time');
-    const pointsElement = document.getElementById('points');
+  // Initialize the Telegram Web App
+  const tg = window.Telegram.WebApp;
 
-    // This function will calculate points based on account creation time
-    function calculatePoints(creationDate) {
-        const currentTime = Math.floor(Date.now() / 1000);
-        const accountAgeInSeconds = currentTime - creationDate;
-        const accountAgeInMonths = accountAgeInSeconds / (30 * 24 * 60 * 60);
+  // Fetch user data (mocked for demonstration, replace with real API call)
+  tg.ready(function() {
+    const user = tg.initDataUnsafe.user;
 
-        let points = 0;
-        if (accountAgeInMonths >= 24) {
-            points = 550;
-        } else if (accountAgeInMonths >= 12) {
-            points = 250;
-        } else if (accountAgeInMonths >= 9) {
-            points = 150;
-        } else if (accountAgeInMonths >= 6) {
-            points = 110;
-        } else if (accountAgeInMonths >= 3) {
-            points = 50;
-        }
+    // Simulate retrieving the account creation date (This should be replaced with actual data)
+    const accountCreationDate = new Date(user.creation_date * 1000); // Assuming you can get this date from Telegram API
 
-        return {
-            months: Math.floor(accountAgeInMonths),
-            points: points
-        };
+    // Calculate the time difference between the current date and account creation date
+    const currentTime = new Date();
+    const timeDifference = currentTime - accountCreationDate;
+    const monthsDifference = timeDifference / (1000 * 60 * 60 * 24 * 30);
+
+    let points = 0;
+    if (monthsDifference >= 24) {
+      points = 550;
+    } else if (monthsDifference >= 12) {
+      points = 250;
+    } else if (monthsDifference >= 9) {
+      points = 150;
+    } else if (monthsDifference >= 6) {
+      points = 110;
+    } else if (monthsDifference >= 3) {
+      points = 50;
     }
 
-    // Simulate Telegram WebApp initialization (this would normally be provided by Telegram WebApp)
-    const user = window.Telegram?.WebApp?.initDataUnsafe?.user || {
-        id: 12345,
-        creation_date: Math.floor((Date.now() - (1000 * 60 * 60 * 24 * 365 * 2)) / 1000) // 2 years ago
-    };
+    // Display the popup with account time and points
+    document.getElementById('account-time').innerText = `${Math.floor(monthsDifference)} months`;
+    document.getElementById('points').innerText = points;
 
-    // Calculate account time and points
-    const accountInfo = calculatePoints(user.creation_date);
-    accountTimeElement.textContent = `${accountInfo.months} months`;
-    pointsElement.textContent = accountInfo.points;
-
-    // Display the popup
-    popup.style.display = 'block';
+    const popup = document.getElementById('popup');
+    popup.classList.remove('hidden');
 
     // Hide the popup after 10 seconds
     setTimeout(() => {
-        popup.style.display = 'none';
+      popup.classList.add('hidden');
     }, 10000);
-
-    // Redirect or change page content after 20 seconds
-    setTimeout(() => {
-        window.location.href = 'anotherpage.html'; // Replace with your desired URL or function
-    }, 20000);
+  });
 };
