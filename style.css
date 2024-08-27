@@ -56,10 +56,17 @@ body {
     display: none;
 }
 
-.balance {
+.user-info {
+    display: flex;
+    justify-content: space-between;
     position: absolute;
     top: 20px;
-    right: 20px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+.username, .balance {
     font-size: 24px;
     background-color: #ffffff;
     color: #333;

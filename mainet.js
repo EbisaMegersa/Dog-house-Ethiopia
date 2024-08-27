@@ -8,31 +8,28 @@ document.addEventListener('DOMContentLoaded', () => {
         return pointValues[randomIndex];
     }
 
-    // Function to initialize user points
-    function initializePoints() {
-        const earnedPoints = getRandomPoints();
+    // Get a random point value
+    const earnedPoints = getRandomPoints();
 
-        // Update points in the popup
-        document.getElementById('points').innerText = earnedPoints;
+    // Update points in the popup
+    document.getElementById('points').innerText = earnedPoints;
 
-        // Update balance
-        let currentBalance = parseInt(localStorage.getItem('balance') || '0', 10);
-        currentBalance += earnedPoints;
-        localStorage.setItem('balance', currentBalance);
-        document.getElementById('balance-value').innerText = currentBalance;
+    // Update balance
+    let currentBalance = parseInt(localStorage.getItem('balance') || '0', 10);
+    currentBalance += earnedPoints;
+    localStorage.setItem('balance', currentBalance);
+    document.getElementById('balance-value').innerText = currentBalance;
 
-        // Mark points as given
-        localStorage.setItem('pointsGiven', 'true');
-    }
-
-    // Check if points have already been given
-    if (!localStorage.getItem('pointsGiven')) {
-        initializePoints();
-        document.getElementById('popup').classList.remove('hidden');
+    // Fetch the user's Telegram username
+    const user = window.Telegram.WebApp.initDataUnsafe.user;
+    if (user) {
+        document.getElementById('username-value').innerText = user.username || 'No username';
     } else {
-        // Set balance display if points were already given
-        document.getElementById('balance-value').innerText = localStorage.getItem('balance') || '0';
+        document.getElementById('username-value').innerText = 'Guest';
     }
+
+    // Show the popup
+    document.getElementById('popup').classList.remove('hidden');
 });
 
 function closePopup() {
