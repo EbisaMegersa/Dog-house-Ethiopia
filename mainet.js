@@ -1,69 +1,40 @@
-window.onload = function() {
-    const popup = document.getElementById('popup');
-    const pointValue = document.getElementById('point-value');
-    const balanceValue = document.getElementById('balance-value');
-    const close = document.querySelector('.close');
+document.addEventListener('DOMContentLoaded', () => {
+    // List of possible points
+    const pointValues = [1, 5, 7, 9, 14, 17, 10, 19, 22, 38, 43, 48, 50];
 
-    const pointsArray = [10, 31, 11, 200, 1, 23];
-    let currentBalance = 0;
-
-    // Function to generate a random point value
+    // Function to get a random point value from the list
     function getRandomPoints() {
-        const randomIndex = Math.floor(Math.random() * pointsArray.length);
-        return pointsArray[randomIndex];
+        const randomIndex = Math.floor(Math.random() * pointValues.length);
+        return pointValues[randomIndex];
     }
 
-    // Function to get user balance from localStorage
-    function getUserBalance(userId) {
-        const balance = localStorage.getItem(`balance_${userId}`);
-        return balance ? parseInt(balance) : 0;
+    // Function to initialize user points
+    function initializePoints() {
+        const earnedPoints = getRandomPoints();
+
+        // Update points in the popup
+        document.getElementById('points').innerText = earnedPoints;
+
+        // Update balance
+        let currentBalance = parseInt(localStorage.getItem('balance') || '0', 10);
+        currentBalance += earnedPoints;
+        localStorage.setItem('balance', currentBalance);
+        document.getElementById('balance-value').innerText = currentBalance;
+
+        // Mark points as given
+        localStorage.setItem('pointsGiven', 'true');
     }
 
-    // Function to save user balance to localStorage
-    function saveUserBalance(userId, balance) {
-        localStorage.setItem(`balance_${userId}`, balance);
+    // Check if points have already been given
+    if (!localStorage.getItem('pointsGiven')) {
+        initializePoints();
+        document.getElementById('popup').classList.remove('hidden');
+    } else {
+        // Set balance display if points were already given
+        document.getElementById('balance-value').innerText = localStorage.getItem('balance') || '0';
     }
+});
 
-    // Function to handle user login via Telegram
-    function userLogin() {
-        // Simulate fetching Telegram user ID
-        const userId = Telegram.WebApp.initDataUnsafe.user.id;
-
-        // Retrieve or initialize the user's balance
-        currentBalance = getUserBalance(userId);
-
-        // Check if the user has already received their points
-        if (!localStorage.getItem(`points_claimed_${userId}`)) {
-            // First-time login, give random points
-            let earnedPoints = getRandomPoints();
-            currentBalance += earnedPoints;
-            balanceValue.textContent = currentBalance;
-            pointValue.textContent = earnedPoints;
-
-            // Save the updated balance and mark points as claimed
-            saveUserBalance(userId, currentBalance);
-            localStorage.setItem(`points_claimed_${userId}`, 'true');
-
-            // Show the popup
-            popup.style.display = 'block';
-        } else {
-            // User has already claimed points, just display balance
-            balanceValue.textContent = currentBalance;
-        }
-    }
-
-    // Automatically log the user in and manage their balance
-    userLogin();
-
-    // Close the popup when the close button is clicked
-    close.onclick = function() {
-        popup.style.display = 'none';
-    }
-
-    // Close the popup when clicking outside of it
-    window.onclick = function(event) {
-        if (event.target == popup) {
-            popup.style.display = 'none';
-        }
-    }
-};
+function closePopup() {
+    document.getElementById('popup').classList.add('hidden');
+}
