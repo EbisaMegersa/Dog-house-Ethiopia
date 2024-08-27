@@ -1,34 +1,42 @@
 window.onload = function() {
-    // Get the user's account creation date from Telegram (mocked for this example)
-    const accountCreationDate = new Date('2022-05-01'); // Replace with actual Telegram API data
+    // Initialize the Telegram Web App
+    const tg = window.Telegram.WebApp;
 
-    // Calculate the time difference between the current date and account creation date
-    const currentTime = new Date();
-    const timeDifference = currentTime - accountCreationDate;
-    const monthsDifference = timeDifference / (1000 * 60 * 60 * 24 * 30);
+    // Fetch user data (mocked for demonstration, replace with real API call)
+    tg.ready(function() {
+        const user = tg.initDataUnsafe.user;
 
-    let points = 0;
-    if (monthsDifference >= 24) {
-        points = 550;
-    } else if (monthsDifference >= 12) {
-        points = 250;
-    } else if (monthsDifference >= 9) {
-        points = 150;
-    } else if (monthsDifference >= 6) {
-        points = 110;
-    } else if (monthsDifference >= 3) {
-        points = 50;
-    }
+        // Simulate retrieving the account creation date (This should be replaced with actual data)
+        const accountCreationDate = new Date(user.creation_date * 1000); // Assuming you can get this date from Telegram API
 
-    // Display the popup with account time and points
-    document.getElementById('account-time').innerText = `${Math.floor(monthsDifference)} months`;
-    document.getElementById('points').innerText = points;
+        // Calculate the time difference between the current date and account creation date
+        const currentTime = new Date();
+        const timeDifference = currentTime - accountCreationDate;
+        const monthsDifference = timeDifference / (1000 * 60 * 60 * 24 * 30);
 
-    const popup = document.getElementById('popup');
-    popup.classList.remove('hidden');
+        let points = 0;
+        if (monthsDifference >= 24) {
+            points = 550;
+        } else if (monthsDifference >= 12) {
+            points = 250;
+        } else if (monthsDifference >= 9) {
+            points = 150;
+        } else if (monthsDifference >= 6) {
+            points = 110;
+        } else if (monthsDifference >= 3) {
+            points = 50;
+        }
 
-    // Hide the popup after 10 seconds
-    setTimeout(() => {
-        popup.classList.add('hidden');
-    }, 5000);
+        // Display the popup with account time and points
+        document.getElementById('account-time').innerText = `${Math.floor(monthsDifference)} months`;
+        document.getElementById('points').innerText = points;
+
+        const popup = document.getElementById('popup');
+        popup.classList.remove('hidden');
+
+        // Hide the popup after 10 seconds
+        setTimeout(() => {
+            popup.classList.add('hidden');
+        }, 10000);
+    });
 };
