@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Verification Progress</title>
+    <title>Win Points</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
+    <div id="balance">Balance: <span id="balance-value">0</span> points</div>
     <div id="popup" class="popup">
-        <h2>Account Info</h2>
-        <p>Account Time: <span id="account-time"></span></p>
-        <p>Points: <span id="points"></span></p>
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2>Wow, You Win!</h2>
+            <p>Your points: <span id="point-value"></span></p>
+        </div>
     </div>
-
     <script src="mainet.js"></script>
 </body>
 </html>
