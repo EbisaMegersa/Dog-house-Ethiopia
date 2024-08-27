@@ -4,14 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #popup {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        #popup h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        #popup p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
-    <div id="popup" class="popup hidden">
+    <div id="popup">
         <h2>Welcome!</h2>
-        <p>Account time: <span id="account-time"></span></p>
-        <p>Points: <span id="points"></span></p>
+        <p>Account time: <span id="account-time">--</span></p>
+        <p>Points: <span id="points">--</span></p>
     </div>
     <script src="mainet.js"></script>
 </body>
